@@ -1,0 +1,15 @@
+# Source .bashrc for interactive shells if it exists
+if [ -f ~/.bashrc ]; then
+  . ~/.bashrc
+fi
+
+# Programmable completion for Bash 4.1+
+# https://github.com/scop/bash-completion
+if [ -x /usr/local/etc/profile.d/bash_completion.sh ]; then 
+    . /usr/local/etc/profile.d/bash_completion.sh
+fi
+
+# Jared's Bash Customizations
+if [ -r ~/.jared/bash_customized ]; then 
+    . ~/.jared/bash_customized
+fi

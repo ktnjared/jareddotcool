@@ -1,0 +1,50 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+    background: rgba(230, 230, 230, 255);
+    color: rgba(20, 20, 20, 255);
+    font-family: 'Fira Code', 'Fira Sans', 'DejaVu Sans', 'Helvetica Neue', 'Calibri';
+}
+
+h1 {
+    font-size: 48px;
+}
+
+a:link {
+    color:blue
+}
+
+a:hover {
+    color: red;
+}
+
+div#site-icons span {
+    color: blueviolet;
+    padding: 25px 5px 0px 5px;
+}
+
+ul {
+    list-style: none;
+    display: inline-block;
+    padding: 0px;
+}
+
+li {
+    display: block;
+    float: left;
+    padding: 0px 5px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    width: 800px;
+    text-align: center;
+}

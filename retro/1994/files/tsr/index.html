@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0-alpha/dist/katex.min.css" integrity="sha384-BTL0nVi8DnMrNdMQZG1Ww6yasK9ZGnUxL1ZWukXQ7fygA1py52yPp9W4wrR00VML" crossorigin="anonymous">
+        <style>
+/*--------------------------------------------------------------------------------------------- * Copyright (c) Microsoft Corporation. All rights reserved. * Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/ body { font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback"; font-size: 14px; padding: 0 26px; line-height: 22px; word-wrap: break-word; } #code-csp-warning { position: fixed; top: 0; right: 0; color: white; margin: 16px; text-align: center; font-size: 12px; font-family: sans-serif; background-color:#444444; cursor: pointer; padding: 6px; box-shadow: 1px 1px 1px rgba(0,0,0,.25); } #code-csp-warning:hover { text-decoration: none; background-color:#007acc; box-shadow: 2px 2px 2px rgba(0,0,0,.25); } body.scrollBeyondLastLine { margin-bottom: calc(100vh - 22px); } body.showEditorSelection .code-line { position: relative; } body.showEditorSelection .code-active-line:before, body.showEditorSelection .code-line:hover:before { content: ""; display: block; position: absolute; top: 0; left: -12px; height: 100%; } body.showEditorSelection li.code-active-line:before, body.showEditorSelection li.code-line:hover:before { left: -30px; } .vscode-light.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(0, 0, 0, 0.15); } .vscode-light.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(0, 0, 0, 0.40); } .vscode-light.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-dark.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 255, 255, 0.4); } .vscode-dark.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 255, 255, 0.60); } .vscode-dark.showEditorSelection .code-line .code-line:hover:before { border-left: none; } .vscode-high-contrast.showEditorSelection .code-active-line:before { border-left: 3px solid rgba(255, 160, 0, 0.7); } .vscode-high-contrast.showEditorSelection .code-line:hover:before { border-left: 3px solid rgba(255, 160, 0, 1); } .vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before { border-left: none; } img { max-width: 100%; max-height: 100%; } a { text-decoration: none; } a:hover { text-decoration: underline; } a:focus, input:focus, select:focus, textarea:focus { outline: 1px solid -webkit-focus-ring-color; outline-offset: -1px; } hr { border: 0; height: 2px; border-bottom: 2px solid; } h1 { padding-bottom: 0.3em; line-height: 1.2; border-bottom-width: 1px; border-bottom-style: solid; } h1, h2, h3 { font-weight: normal; } h1 code, h2 code, h3 code, h4 code, h5 code, h6 code { font-size: inherit; line-height: auto; } table { border-collapse: collapse; } table > thead > tr > th { text-align: left; border-bottom: 1px solid; } table > thead > tr > th, table > thead > tr > td, table > tbody > tr > th, table > tbody > tr > td { padding: 5px 10px; } table > tbody > tr + tr > td { border-top: 1px solid; } blockquote { margin: 0 7px 0 5px; padding: 0 16px 0 10px; border-left-width: 5px; border-left-style: solid; } code { font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback"; font-size: 14px; line-height: 19px; } body.wordWrap pre { white-space: pre-wrap; } .mac code { font-size: 12px; line-height: 18px; } pre:not(.hljs), pre.hljs code > div { padding: 16px; border-radius: 3px; overflow: auto; } /** Theming */ pre code { color: var(--vscode-editor-foreground); } .vscode-light pre:not(.hljs), .vscode-light code > div { background-color: rgba(220, 220, 220, 0.4); } .vscode-dark pre:not(.hljs), .vscode-dark code > div { background-color: rgba(10, 10, 10, 0.4); } .vscode-high-contrast pre:not(.hljs), .vscode-high-contrast code > div { background-color: rgb(0, 0, 0); } .vscode-high-contrast h1 { border-color: rgb(0, 0, 0); } .vscode-light table > thead > tr > th { border-color: rgba(0, 0, 0, 0.69); } .vscode-dark table > thead > tr > th { border-color: rgba(255, 255, 255, 0.69); } .vscode-light h1, .vscode-light hr, .vscode-light table > tbody > tr + tr > td { border-color: rgba(0, 0, 0, 0.18); } .vscode-dark h1, .vscode-dark hr, .vscode-dark table > tbody > tr + tr > td { border-color: rgba(255, 255, 255, 0.18); } 
+</style>
+<style>
+/* Tomorrow Theme */ /* http://jmblog.github.com/color-themes-for-google-code-highlightjs */ /* Original theme - https://github.com/chriskempson/tomorrow-theme */ /* Tomorrow Comment */ .hljs-comment, .hljs-quote { color: #8e908c; } /* Tomorrow Red */ .hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: #c82829; } /* Tomorrow Orange */ .hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: #f5871f; } /* Tomorrow Yellow */ .hljs-attribute { color: #eab700; } /* Tomorrow Green */ .hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: #718c00; } /* Tomorrow Blue */ .hljs-title, .hljs-section { color: #4271ae; } /* Tomorrow Purple */ .hljs-keyword, .hljs-selector-tag { color: #8959a8; } .hljs { display: block; overflow-x: auto; color: #4d4d4c; padding: 0.5em; } .hljs-emphasis { font-style: italic; } .hljs-strong { font-weight: bold; }
+</style>
+<style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="the-scenic-drive">The Scenic Drive</h1>
+<p>An app that does the things that I do manually right now when I plan a drive. Or aids random &quot;point in a direction&quot; and go.</p>
+<ul>
+<li>OpenStreetMap</li>
+<li>Avoid options
+<ul>
+<li>Highways</li>
+<li>State routes</li>
+<li>Difficult intersections</li>
+<li>Traffic threshold</li>
+<li>Population density
+<ul>
+<li>Avoid big cities</li>
+<li>Avoid burbs</li>
+<li>Etc</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Limit road routes by speed limit</li>
+<li>River Fording: no, minimize, allow</li>
+<li>Dirt roads: no, minimize, allow</li>
+<li>&quot;Route&quot; feature: One-way directions</li>
+<li>&quot;Drive&quot; feature: loop (start &amp; end at current location)
+<ul>
+<li>Create a drive automatically</li>
+<li>Drive can be set by distance or time</li>
+<li>Drive can be set to minimize roads already travelled
+<ul>
+<li>will require historical data to be saved</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Autos
+<ul>
+<li>CarPlay on iOS</li>
+<li>Android Auto on Android</li>
+</ul>
+</li>
+<li>Platforms
+<ul>
+<li>iOS</li>
+<li>Android</li>
+<li>Ubuports/Ubuntu Phone?</li>
+<li>PurismOS/Librem5?</li>
+<li>Web?
+<ul>
+<li>Web to device xfer like GMaps or Apple Maps?</li>
+</ul>
+</li>
+<li>Universal Windows?</li>
+<li>Mac?
+<ul>
+<li>Wait for Marzipan?</li>
+<li>Am I going to have to write this in Swift/find a Swift dev?</li>
+</ul>
+</li>
+<li>Anything else?</li>
+</ul>
+</li>
+<li>Is Xamarin a good fit?</li>
+<li>Who has traffic data?</li>
+<li>Who has speed limit data?</li>
+<li>Who has emergency road closure data?</li>
+<li>Who has construction or road works data?</li>
+<li>Who has elevation data?</li>
+<li>Integration
+<ul>
+<li>Automatic?</li>
+<li>Other OBD devices?</li>
+<li>Other GPS devices?</li>
+<li>Dark sky or other weather API
+<ul>
+<li>Avoid isolated inclement weather if possible</li>
+<li>Combine with elevation data to avoid big elevation changes when wet or icy conditions exist?</li>
+<li>Notifications about active weather watches warnings and statements from NOAA</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Reroute based on parameters
+<ul>
+<li>Traffic</li>
+<li>Etc</li>
+</ul>
+</li>
+<li>&quot;Thifting&quot; feature
+<ul>
+<li>A &quot;drive&quot; that takes Goodwill, thrift shops and flea markets into consideration
+<ul>
+<li>Location</li>
+<li>Store Hours
+<ul>
+<li>Yelp?</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>&quot;commute&quot; feature
+<ul>
+<li>Automatically avoid traffic threshold routes to and from work and home</li>
+<li>Option to Set days for this feature to display and hide otherwise
+<ul>
+<li>Calendar integration?</li>
+</ul>
+</li>
+<li>For those days you really need a change of scenery on the way home</li>
+</ul>
+</li>
+<li>Tbt voice
+<ul>
+<li>How does this work?</li>
+<li>How to create?</li>
+</ul>
+</li>
+<li>Units
+<ul>
+<li>Imperial</li>
+<li>Metric</li>
+<li>Comical/Nerdy?
+<ul>
+<li>Star trek</li>
+<li>Star wars</li>
+<li>Farscape</li>
+<li>Military</li>
+<li>BSG</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Challenge Mode
+<ul>
+<li>Drive all roads in a
+<ul>
+<li>Division</li>
+<li>City / incorporated area</li>
+<li>County</li>
+<li>State</li>
+<li>Country</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Driving Application Legal things
+<ul>
+<li>What do I need to know</li>
+<li>Things to avoid</li>
+<li>Rules for each platform</li>
+<li>State laws</li>
+<li>Federal laws</li>
+</ul>
+</li>
+<li>Scope
+<ul>
+<li>DMVPDeWvNj only?</li>
+<li>Us only?</li>
+<li>Canada?</li>
+<li>Mexico?</li>
+<li>UK?</li>
+<li>Europe?</li>
+<li>Asia?</li>
+<li>India?</li>
+<li>Oz?</li>
+</ul>
+</li>
+<li>Historical Data
+<ul>
+<li>What do I need?
+<ul>
+<li>Location</li>
+<li>Account details</li>
+<li>MFA</li>
+</ul>
+</li>
+<li>GDPR</li>
+<li>CA version of GDPR</li>
+</ul>
+</li>
+</ul>
+
+    </body>
+    </html>

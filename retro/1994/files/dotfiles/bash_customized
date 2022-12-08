@@ -1,0 +1,215 @@
+# Get OS
+os=$(uname)
+
+# Customise bash prompt
+
+# Requirement: git and bash-git-prompt
+# macOS: manually `brew install git bash-git-prompt` if this fails
+# if [ $os = "Darwin" ] && [ -f "/usr/local/opt/bash-git-prompt/share/gitprompt.sh" ]; then 
+#     __GIT_PROMPT_DIR="/usr/local/opt/bash-git-prompt/share"
+#     source "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
+
+#     # Set Prompt
+#     PS1='\[\033]0;$TITLEPREFIX:$PWD\007\]\n\[\033[32m\]\u \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\]\n$ '
+# fi
+
+# Enable color support for ls
+if [ $os = "Darwin" ] || [ $os = "BSD" ]; then 
+    alias ls='ls -G'           # color for macOS & BSD compatibility
+elif [ $os = "Linux" ]; then 
+    alias ls='ls --color=auto' # color for Linux compatibility
+fi
+
+# ls derivitives
+alias lsa='ls -A -F'          # ls all
+alias lsd='ls -d -l */'       # ls visible directories
+alias ll='ls -h -l -s -F'     # ls all in long format
+alias lla='ll -A'             # ls all directory contents in long format
+alias lld='ls -d -l .*/ */'   # ls all directories
+alias l.='ls -d -l .*/'       # ls hidden directories
+
+# Enable basic regex for grep
+alias grep='grep --basic-regexp --color=auto'
+alias fgrep='fgrep --basic-regexp --color=auto'
+alias egrep='egrep --basic-regexp --color=auto'
+
+# Colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+# Colorized man pages
+function man() {
+    env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    man "$@"
+}
+
+# Find a file in the current directory
+function llfind() {
+    ll -A -h | grep -i $1
+}
+
+# Faster multi-directory backtrack navigation - dots variant
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+# Faster multi-directory backtrack navigation - mario mushrooms variant
+alias 1up="cd .."
+alias 2up="cd ../.."
+alias 3up="cd ../../.."
+alias 4up="cd ../../../.."
+alias 5up="cd ../../../../.."
+
+# Refresh current bash session
+alias rebash='source ~/.bashrc'
+
+# Clear the screen
+alias cls='clear'
+
+# Display free disk space with human-readable, base2 sizes
+alias df='df -h'
+
+# Make directory; make parents, verbosely, if necessary
+alias mkdir='mkdir -p -v'
+
+# Make directory; make parents, verbosely, if necessary; change into that path
+function newdir() {
+    mkdir "$1"
+    cd "$1"
+}
+
+# give cp a status bar
+# source: https://chris-lamb.co.uk/posts/can-you-get-cp-to-give-a-progress-bar-like-wget
+#!/bin/sh
+function cp_p() {
+   strace -q -ewrite cp -- "${1}" "${2}" 2>&1 \
+      | awk '{
+        count += $NF
+            if (count % 10 == 0) {
+               percent = count / total_size * 100
+               printf "%3d%% [", percent
+               for (i=0;i<=percent;i++)
+                  printf "="
+               printf ">"
+               for (i=percent;i<100;i++)
+                  printf " "
+               printf "]\r"
+            }
+         }
+         END { print "" }' total_size=$(stat -c '%s' "${1}") count=0
+}
+
+# alias cp_p to cp
+# alias cp='cp_p'
+
+# Open things in Visual Studio Code
+alias e='code'
+alias edit='code'
+alias ebash='code ~/.bash_profile' # Open this file in Visual Studio Code
+alias edir='code .'                # Open current directory in Visual Studio Code
+alias editdir='code .'             # Open current directory in Visual Studio Code
+
+# Open current directory in file manager
+alias fm='open .'
+
+# base64 decode/ecode a string
+alias 64e='echo $1 | base64 <<<'
+alias 64d='echo $1 | base64 --decode <<<'
+
+# Get public IP Address
+alias ip='curl icanhazip.com'
+
+# Weather from wttr.in
+# wttr help: http://wttr.in/:help
+# wttr bash: http://wttr.in/:bash.function
+function wttr() {
+    
+    if [ $os = "Darwin" ] && [ -x CoreLocationCLI ]; then 
+        # CoreLocationCLI: https://github.com/fulldecent/corelocationcli
+        local location=$(CoreLocationCLI -format %postalCode --once)
+    else
+        # Frederick, MD
+        local location="${21703}"
+    fi
+
+    local request="wttr.in/"$location"" 
+    
+    if [ "$(tput cols)" -lt 125 ]; then
+        request+='?1mn'
+    else
+        request+='?1AFm'
+    fi
+    
+    curl -H "Accept-Language: ${LANG%_*}" --compressed "$request"
+}
+
+alias weather='wttr' # for those times I forget
+
+# Auto-resume wget by default
+alias wget='wget -c'
+
+# Use wget to archive a website
+alias archivesite='wget -m -k'
+
+# Process Search
+alias pssearch='ps aux | grep -v grep | grep -i -e VSZ -e'
+alias pss='pssearch' # for those times I'm feeling lazy
+
+# Easily extract multiple archive formats
+function extract() {
+    if [ -f $1 ]; then
+        case $1 in
+            *.7z) 7z x $1 ;;
+            *.bz2) bunzip2 $1 ;;
+            *.gz) gunzip $1 ;;
+            *.rar) unrar x $1 ;;
+            *.tar.bz2) tar xvjf $1 ;;
+            *.tar.gz) tar xvzf $1 ;;
+            *.tar) tar xvf $1 ;;
+            *.tbz2) tar xvjf $1 ;;
+            *.tgz) tar xvzf $1 ;;
+            *.Z) uncompress $1 ;;
+            *.zip) unzip $1 ;;
+            *) echo "I do not know how to extract '$1'." ;;
+        esac
+    else
+        echo "'$1' is not a valid archive file!"
+    fi
+}
+
+# Local time and UTC time in ISO-8601 notation
+function now() {
+    date    +"%Y-%m-%d %T %Z" | awk '{ printf "Current Time - " $3 ": " $1 " " $2 "\n" }' # Local TZ time
+    date -u +"%Y-%m-%d %T %Z" | awk '{ printf "Current Time - " $3 ": " $1 " " $2 "\n" }' # UTC time
+}
+
+# Return only uncommented lines in a file
+function ucomments() {
+    THE_FILE= && cat $1 | grep -Pv '^\s*#' | grep -v -e '^$'
+}
+
+# Homebrew (from https://gist.github.com/erikzephyr/b6336d97a415d52667b81d5a7de34023)
+alias brewup='brew update && brew upgrade && brew cleanup'
+alias brewup-cask='brew update && brew cask outdated | awk "{print $1}" | xargs brew cask reinstall && brew cleanup'
+alias brewup-all='brew update && brew upgrade && brew cleanup && brew cask outdated | awk "{print $1}" | xargs brew cask reinstall && brew cleanup'
+
+# youtube-dl functions
+function yt2mp3() {
+    youtube-dl -v --embed-thumbnail -x --audio-format 'mp3' "$1" "$2";
+}
+
+function yt2m4a() {
+    youtube-dl -v --embed-thumbnail -x --audio-format 'm4a' "$1" "$2";
+}
+
+# function yt2hevc() { # THIS ONE STILL NEEDS WORK. THUMBNAILS AREN'T SUPPORTED IN MKV YET.
+#     youtube-dl -v --postprocessor-args "-c:v libx265 -crf -c:a opus -strict experimental -b:a 128k" --merge-output-format 'mkv' "$1" "$2";
+# }
